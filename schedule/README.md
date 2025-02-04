@@ -1,6 +1,6 @@
 # Workshop Schedule
 
-> **NOTE:** The *Basic Data Skills* [Introduction to the command-line interface](https://hbctraining.github.io/Intro-to-shell-flipped/schedule/) workshop is a prerequisite.
+> **NOTE:** The *Basic Data Skills* [Shell for Bioinformatics](https://hbctraining.github.io/Shell-for-bioinformatics/) workshop is a prerequisite.
 
 
 ## Pre-reading:
@@ -16,7 +16,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop Introduction](https://github.com/hbctraining/Intro-to-ChIPseq-flipped/blob/main/lectures/workshop_intro_slides.pdf) | Meeta |
+| 09:30 - 09:45 | [Workshop Introduction](../lectures/workshop_intro_slides.pdf) | Meeta |
 | 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing](../lectures/Introduction_to_ChIP-seq_2024_small.pdf) | Dr. Shannan Ho Sui |
 | 11:00- 11:05 | Break|  |
 | 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) | Will |

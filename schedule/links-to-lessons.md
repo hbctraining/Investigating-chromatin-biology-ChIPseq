@@ -1,4 +1,4 @@
-# Understanding chromatin biology using high throughput sequencing workshop
+# Investigating chromatin biology using ChIP-seq and CUT&RUN 
 
 ### Learning Objectives
 * Understand the necessity for, and use of, the command line interface (bash) and HPC for analyzing high-throughput sequencing data.

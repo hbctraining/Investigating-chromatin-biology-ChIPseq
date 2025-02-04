@@ -1,9 +1,9 @@
-## Understanding chromatin biology using high throughput sequencing
+## Investigating chromatin biology using ChIP-seq and CUT&RUN 
 
 
 | Audience | Computational Skills | Prerequisites | Duration |
 :----------|:----------|:----------|:----------|
-| Biologists | Intermediate | None | Shell basics|
+| Biologists | Intermediate | [Shell for Bioinformatics](https://hbctraining.github.io/Shell-for-bioinformatics/) | 3 day - 2.5 hours each day|
 
 
 ### Learning Objectives
@@ -23,9 +23,9 @@
 
 ### Description
 
-This repository has teaching materials for the Understanding chromatin biology using high throughput sequencing workshop. 
+This repository has teaching materials for the **Investigating chromatin biology using ChIP-seq and CUT&RUN** workshop. 
 
-> Pre-requisite: Introduction to Shell
+> Pre-requisite: Shell for Bioinformatics
 
 This workshop focuses on teaching computational skills to enable the effective use of an high-performance computing environment to implement a ChIP-seq data analysis workflow. In addition to running the workflow from FASTQ files to peak calls, the workshop covers best practice guidelines for ChIP-seq experimental design and data organization/management and data visualization for quality control.
 

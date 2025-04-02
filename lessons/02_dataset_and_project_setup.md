@@ -159,7 +159,7 @@ $ tree     # this will show you the directory structure you just created
 Now that we have the directory structure created, let's **copy over the data**:
 
 ```bash
-$ cp /n/groups/hbctraining/harwell-datasets/chipseq_workshop/data/*fastq.gz raw_data/
+$ cp /n/groups/hbctraining/harwell-datasets/workshop_material/data/*fastq.gz raw_data/
 
 ```
 

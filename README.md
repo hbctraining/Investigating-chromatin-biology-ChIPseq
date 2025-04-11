@@ -18,8 +18,7 @@
 
 ### Lessons
 * [Workshop schedule (trainer-led learning)](schedule/)
-* [Self-learning](/schedule/links-to-lessons.md)
-
+* [Self-learning](schedule/links-to-lessons.md)
 
 ### Description
 

@@ -6,9 +6,9 @@
 ## Pre-reading:
 
 * Please **study the contents** and **work through all the exercises** within the following lessons:
-  * [Shell basics review](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/shell_review.html)
-  * [Best Practices in Research Data Management (RDM)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html)
-  * [Working in an HPC environment](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html)
+  * [Shell basics review](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/shell_review.html)
+  * [Best Practices in Research Data Management (RDM)](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/04a_data_organization.html)
+  * [Working in an HPC environment](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/working_on_HPC_noExercises.html)
   * [A review of high-throughput sequencing methods for understanding chromatin biology](../lessons/01a_Understanding_chromatin_with_HTS.md)
   
   
@@ -19,7 +19,7 @@
 | 09:30 - 09:45 | [Workshop Introduction](../lectures/workshop_intro_slides.pdf) | Meeta |
 | 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing](../lectures/Introduction_to_ChIP-seq_2024_small.pdf) | Dr. Shannan Ho Sui |
 | 11:00- 11:05 | Break|  |
-| 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html) | Will |
+| 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/working_on_HPC_noExercises.html) | Will |
 | 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Will |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Meeta|
 

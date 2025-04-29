@@ -17,7 +17,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop Introduction](../lectures/workshop_intro_slides.pdf) | Meeta |
-| 09:45 - 11:00 | [Understanding chromatin biology using high-throughput sequencing](../lectures/Introduction_to_ChIP-seq_2024_small.pdf) | Dr. Shannan Ho Sui |
+| 09:45 - 11:00 | [Studying epigenetic regulation using high-throughput sequencing data]() | [Dr. Ming "Tommy" Tang](https://www.linkedin.com/in/🎯-ming-tommy-tang-40650014/) |
 | 11:00- 11:05 | Break|  |
 | 11:05 - 11:20 | [HPC review Q&A](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/working_on_HPC_noExercises.html) | Will |
 | 11:20 - 11:50 | [Dataset overview and project organization](../lessons/02_dataset_and_project_setup.md) | Will |

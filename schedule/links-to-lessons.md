@@ -37,9 +37,9 @@ To run through the code in the lessons below, you will need to be **logged into 
 ## Lessons
 
 ### Part 1 
-1. [Shell basics review](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/shell_review.html)
-1. [Working in an HPC environment - Review](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/working_on_HPC_noExercises.html)
-1. [Best Practices in Research Data Management (RDM)](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon-flipped/lessons/04a_data_organization.html)
+1. [Shell basics review](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/shell_review.html)
+1. [Working in an HPC environment - Review](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/working_on_HPC_noExercises.html)
+1. [Best Practices in Research Data Management (RDM)](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/04a_data_organization.html)
 1. [Dataset overview and Project organization)](../lessons/02_dataset_and_project_setup.md)
      
 ***

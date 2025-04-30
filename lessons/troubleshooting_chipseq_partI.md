@@ -76,6 +76,10 @@ _Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC
 
 > **NOTE:** For paired-end reads you will also want to checking percent that are properly paired. By default, Bowtie 2 searches for both concordant and discordant alignments, though searching for discordant alignments can be disabled with the `--no-discordant option`.
 
+## MultiQC: An aggregation QC metrics in report format
+As you go through the ChIP-seq workflow (or most NGS workflows), it is important to track the metrics/results at every step. Careful evaluation of metrics described above enable you to identify any issues with the data and/or the parameters you are using, as well as alert you to the presence of contamination or systematic biases, etc. An important QC step is to make sure that these metrics are **consistent across the samples for a given experiment**, and any outliers should be investigated further.
+
+Manually tracking these metrics is tedious and error-prone. [MultiQC](https://seqera.io/multiqc/), is an open source tool used to aggregate bionformatics results. It can generate an HTML report from 96 different bioinformatics tools, and includes helpful visualizations to make comparisons across samples within a dataset. While we are not implementing it in this workshop, we encourage you to read through [this lesson](https://hbctraining.github.io/Intro-to-bulk-RNAseq/lessons/11_multiQC.html) as an example of its use on RNA-seq data analysis.
 
 ## Peak quality checks
 The quality checks at this stage in the workflow include:

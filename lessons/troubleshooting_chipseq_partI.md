@@ -85,6 +85,7 @@ Manually tracking these metrics is tedious and error-prone. [MultiQC](https://se
 The quality checks at this stage in the workflow include:
 
 * Total number of peaks called
+* Read enrichment within known artifact regions
 * Peak concordance between replicates
 * Qualitative assessment of peak enrichment 
 
@@ -111,6 +112,8 @@ _Image source: [Hendrix, DA, "Applied Bioinformatics" - Online textbook from Ore
    *  Check the number of usable reads that were used for peak calling. Ensure it meets and/or exceeds the guidelines.
    *  Sites can be detected with greater confidence in larger data sets because of the increased statistical power afforded by more reads  
 
+### Read enrichment within known artifact regions
+The use of exclusive regions of “blacklists”, or regions where genome assembly results in erroneous signal are a critical part of the workflow as it helps  to remove signal-artifact regions in ChIP-seq experiments. As described in this workshop, filtering can happen after alignment or after peak calling. If a high percentage of our peaks are filtered out due to overlap with blacklist regions - this tells us that most of the peaks we identified were in fact background noise. A **high percentage of peaks overlapping with blacklist regions suggests that your experiment did not work.** If the majority of peaks identified are attributed to backgorund noise, there is effectively **little to no true signal** in your data. To troubleshoot why it didn't work, see some of the points listed above.
 
 ### Replicate concordance
 Unlike RNA-seq, increasing replicates in your ChIP-seq will not increase the number of binding sites identified. Rather, it gives you **confidence that the sites you identified are true signal.**
@@ -134,7 +137,7 @@ _Image source: [Land et, al, 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC
 ### Qualitative assessment of enriched regions
 At this point, if you have a reasonable number of peaks and you observe a good amount of concordance between replicates - the next step is evaluating the enriched regions. You can do this with a simple site-based inspection (i.e use a genome viewer to look for enrichment profiles fo specific target genes), or use profile plots for a genome-wide assessment.
 
-* Evaluate enrichment within specific genomic regions/features, and within known artifact regions
+* Evaluate enrichment within specific genomic regions/features
 * Compare and contrast the profiles with what you anticipate for the binding profile
 * Compare and contrast the profiles with publicly available datasets
 

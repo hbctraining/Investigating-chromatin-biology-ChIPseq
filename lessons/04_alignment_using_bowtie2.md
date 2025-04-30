@@ -56,7 +56,7 @@ Bowtie2 is a fast and accurate alignment tool that supports gapped, local and pa
 By default, Bowtie2 will perform a global *end-to-end read alignment*, which aligns from the first to the last base of the read. This alignment is best for reads that have already been trimmed for quality and adapters (e.g. reads where nucleotide bases of poor quality or matching adapter sequences have been removed from the ends of the reads prior to alignment). However, Bowtie2 also has a _local alignment mode_, which, in contrast to end-to-end alignment, ignores portions at the ends of the reads that do match well to the reference genome. This is referred to as **soft-clipping** and allows for a more accurate alignment. The procedure can carry a small penalty for each soft-clipped base, but amounts to a significantly smaller penalty than mismatching bases. In contrast to trimming, which removes the unwanted sequence (hard-clipping), soft-clipping retains the soft-clipped base in the sequence and simply marks it. _We will use this option since we did not trim our reads._
 
 <p align="center">
-<img src="../img/softclipping.png" width="700">
+<img src="../img/Clipping.png" width="700">
 </p>  
 
 > #### How do other aligners compare?

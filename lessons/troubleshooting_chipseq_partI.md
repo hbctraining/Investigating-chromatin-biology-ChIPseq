@@ -113,10 +113,7 @@ _Image source: [Hendrix, DA, "Applied Bioinformatics" - Online textbook from Ore
    *  Sites can be detected with greater confidence in larger data sets because of the increased statistical power afforded by more reads  
 
 ### Read enrichment within known artifact regions
-The use of **exclusive regions of “blacklists”**, or regions where genome assembly results in erroneous signal are a critical part of the workflow as it helps  to remove signal-artifact regions in ChIP-seq experiments. As described in this workshop, filtering can happen after alignment or after peak calling. If a high percentage of our peaks are filtered out due to overlap with blacklist regions - this tells us that most of the peaks we identified were in fact background noise. 
-
-A **high percentage of peaks overlapping with blacklist regions suggests that your experiment did not work.** If the majority of peaks identified are attributed to backgorund noise, there is effectively **little to no true signal** in your data. To troubleshoot why it didn't work, see some of the points listed above.
-
+The use of **exclusive regions of “blacklists”**, or regions where genome assembly results in erroneous signal are a critical part of the workflow as it helps  to remove signal-artifact regions in ChIP-seq experiments.
 
 <p align="center">
 <img src="../img/blacklist_encodepaper.png" width="600">
@@ -124,7 +121,7 @@ A **high percentage of peaks overlapping with blacklist regions suggests that yo
 
 _Image source: [The ENCODE Blacklist: Identification of Problematic Regions of the Genome](https://www.nature.com/articles/s41598-019-45839-z/)_
 
-
+As described in this workshop, filtering can happen after alignment or after peak calling. If a high percentage of our peaks are filtered out due to overlap with blacklist regions - this tells us that most of the peaks we identified were in fact background noise. A **high percentage of peaks overlapping with blacklist regions suggests that your experiment did not work.** If the majority of peaks identified are attributed to backgorund noise, there is effectively **little to no true signal** in your data. To troubleshoot why it didn't work, see some of the points listed above.
 
 
 ### Replicate concordance

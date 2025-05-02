@@ -160,7 +160,6 @@ Now that we have the directory structure created, let's **copy over the data**:
 
 ```bash
 $ cp /n/groups/hbctraining/harwell-datasets/workshop_material/data/*fastq.gz raw_data/
-
 ```
 
 We're all set up for our analysis!

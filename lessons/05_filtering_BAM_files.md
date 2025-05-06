@@ -34,7 +34,7 @@ Multi-mapping reads are reads that are mapping to multiple loci on the reference
 	<summary><b><i>Click here to read about how multi-mappers are treated for CUT&RUN and ATAC-seq data</i></b></summary>
 	<br>
 	<p><b>Uniquely mapping reads is critical for ATAC-seq analysis.</b> A unique mapping rate over 80% is typical for a successful experiment. Multi-mappers are always removed.</p>
-	<p><b>There are no mentions of a multi-mapper removal step in CUT&RUN analysis approaches</b>. Perhaps because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the `-k` option).</p>
+	<p><b>There are no mentions of a multi-mapper removal step in CUT&RUN analysis approaches</b>. Perhaps because Bowtie2 defaults to search for multiple alignments, yet only reports the best one (i.e. not using the <code>-k</code> option).</p>
  </details>
 
 ### Duplicate reads

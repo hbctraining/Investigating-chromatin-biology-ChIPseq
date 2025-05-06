@@ -115,7 +115,6 @@ You should now see that the module is loaded:
 
 ```bash
 $ module list
-
 ```
 
 Once a module for a tool is loaded, it becomes directly available to you like any other basic UNIX command. That is, at the command prompt we just need to provide the name of the tool to use it. This is because the path to the executable file for FastQC has now been added to our $PATH variable. Check your $PATH variable to see whether or not you see a relevant path. _Is it appended to the beginning or end? Do you see any additional paths added?_ 

@@ -67,10 +67,10 @@ You can check your scratch quota using the quota-v2 command.
 Great, now we all have created a work directory for ourselves in the `/n/scratch/` storage space! 
 
 ```bash
-ls -l /n/scratch/users/${USER:0:1}/$USER/
+ls -l /n/scratch/users/${USER:0:1}/${USER}/
 ```
 
-When we create our script, we will make sure that all of the analysis output gets saved in the `/n/scratch/users/${USER:0:1}/$USER/` folder.
+When we create our script, we will make sure that all of the analysis output gets saved in the `/n/scratch/users/${USER:0:1}/${USER}/` folder.
 
 > #### A quick explanation on the use of `${USER:0:1}`
 > The `users` on the scratch space are organized into subdirectories starting with the first letter of their username. `${USER:0:1}` will return the first letter of the username. Test this using `echo ${USER:0:1}` at the command line.
@@ -129,7 +129,7 @@ We will start writing the script on our laptops using a simple text editor like 
 
 # change directories to /n/scratch/ so that all the analysis is stored there.
 
-cd /n/scratch/users/${USER:0:1}/$USER/
+cd /n/scratch/users/${USER:0:1}/${USER}/
 ```
 
 **We want users to input the path to the fastq file as input to the shell script**, i.e. `sh chipseq_analysis_on_input_file.sh <name-of-fastq-file>`. To make this work, we have to replace all the places in the script where we want to refer to the fastq file, with the variable `$1`. 
@@ -279,7 +279,7 @@ Your script should now look like this:
 # USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
 
 # change directories to /n/scratch/ so that all the analysis is stored there.
-cd /n/scratch/users/${USER:0:1}/$USER/
+cd /n/scratch/users/${USER:0:1}/${USER}/
 
 # initialize a variable with an intuitive name to store the name of the input fastq file
 fq=$1
@@ -365,7 +365,7 @@ $ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_ch
 This script will take a while to run, given the alignment, filtering and sortin steps all take a long time to run. So we can use `CTRL` + `C` and kill the job. Since the first part of the script should have run, we can go check if the folders were appropriately created.
 
 ```bash
-$ cd /n/scratch/users/${USER:0:1}/$USER/
+$ cd /n/scratch/users/${USER:0:1}/${USER}/
 
 $ tree
 ```
@@ -466,7 +466,7 @@ You can use `O2sacct` to check progress.
 ```bash
 $ O2sacct
 
-$ tree /n/scratch/users/${USER:0:1}/$USER/chipseq/
+$ tree /n/scratch/users/${USER:0:1}/${USER}/chipseq/
 ```
 
 Don't forget about the `scancel` command, should something go wrong and you need to cancel your jobs.

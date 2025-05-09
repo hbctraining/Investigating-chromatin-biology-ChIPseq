@@ -146,8 +146,6 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
   <summary><b>Click here for solution</b></summary>
   
  <p><pre>
-  
-  ```
   # Navigate to results directory
   computeMatrix reference-point --referencePoint center \
   -b 4000 -a 4000 \
@@ -164,15 +162,13 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
   --colors blue red \
   --samplesLabel "WT" "KO" \
   --refPointLabel "PRDM16 binding sites"
-  ```
+</pre></p>
   
 We observed that the WT sample shows significantly higher enrichment at PRDM16-binding regions, compared to the KO sample. The result matches our expectation.
   
   <p align="center">
   <img src="../img/09_plot4_wt_ko.png" width="500">
   </p>
-
-</pre></p>
   
 </details>
 

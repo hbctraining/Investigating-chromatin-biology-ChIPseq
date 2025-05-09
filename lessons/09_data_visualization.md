@@ -106,7 +106,6 @@ Once you have computed the matrix, you can create the **profile plot**. First, m
 > **NOTE:** `plotProfile` has many options to optimize your figure, including the ability to change the type of lines plotted, and to plot by group rather than sample. We encourage you to explore the [documentation](https://deeptools.readthedocs.io/en/develop/content/tools/plotProfile.html?highlight=plotProfile) to find out more detail.
 
 ```bash
-
 # Create figures directory under visualization
 mkdir ~/chipseq_workshop/results/visualization/figures
 
@@ -118,7 +117,6 @@ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 --colors red blue \
 --samplesLabel "WT_replicate1" "WT_replicate2" \
 --refPointLabel "PRDM16 binding sites"
-
 ```
 
 > **NOTE:** The output of `plotProfile` will be a PNG image file, which you **will not be able to open on the cluster**. To view the file you will want to use [FileZilla](03_QC_FASTQC.md#what-is-filezilla) to move it over to your local computer. 
@@ -206,8 +204,7 @@ _The code to compute the matrix is provided in the drop-down below if you are **
 <details>
   <summary><b>Click here to see the code</b></summary>
  <p><pre>
- **Please DO NOT RUN this code.**
-  ```bash
+ # Please DO NOT RUN this code.
   # DO NOT RUN!
   computeMatrix reference-point --referencePoint TSS \
   -b 4000 -a 4000 \
@@ -216,7 +213,6 @@ _The code to compute the matrix is provided in the drop-down below if you are **
   --skipZeros \
   -o visualization/wt_tss_matrix.gz \
   -p 6
-  ```
 </pre></p>
   
 </details>

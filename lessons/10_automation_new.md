@@ -95,7 +95,7 @@ $ srun --pty -p interactive -t 0-2:00 -c 2 --mem 4G /bin/bash
 
 ### More Flexibility with variables
 
-We can write a shell script that will run on a specific file, but to make it more flexible and efficient we would prefer that it lets us give it an input fastq file when we run the script. To be able to provide an input to any shell script, we need to use **Positional Parameters**.
+We can write a shell script that will run on a specific file, but to make it more flexible and efficient we would prefer that it lets us give it an input FASTQ file when we run the script. To be able to provide an input to any shell script, we need to use **Positional Parameters**.
 
 For example, we can refer to the components of the following command as numbered variables **within** the actual script:
 
@@ -104,15 +104,15 @@ For example, we can refer to the components of the following command as numbered
 sh  run_analysis.sh  input.fq  input.gtf  12
 ```
 
-`$0` => run_analysis.sh
+`${0}` => run_analysis.sh
 
-`$1` => input.fq
+`${1}` => input.fq
 
-`$2` => input.gtf
+`${2}` => input.gtf
 
-`$3` => 12
+`${3}` => 12
 
-The variables $1, $2, $3,...$9 and so on are **positional parameters** in the context of the shell script, and can be used within the script to refer to the files/number specified on the command line. Basically, the script is written with the expectation that $1 will be a fastq file and $2 will be a GTF file, and so on.
+The variables `${1}`, `${2}`, `${3}` and so on are **positional parameters** in the context of the shell script, and can be used within the script to refer to the files/number specified on the command line. Basically, the script is written with the expectation that `${1}` will be a fastq file and `${2}` will be a GTF file, and so on.
 
 *There can be virtually unlimited numbers of inputs to a shell script, but it is wise to only have a few inputs to avoid errors and confusion when running a script that used positional parameters.*
 
@@ -132,48 +132,54 @@ We will start writing the script on our laptops using a simple text editor like 
 cd /n/scratch/users/${USER:0:1}/${USER}/
 ```
 
-**We want users to input the path to the fastq file as input to the shell script**, i.e. `sh chipseq_analysis_on_input_file.sh <name-of-fastq-file>`. To make this work, we have to replace all the places in the script where we want to refer to the fastq file, with the variable `$1`. 
+**We want users to input the path to the FASTQ file as input to the shell script**, i.e. `sh chipseq_analysis_on_input_file.sh <name-of-fastq-file>`. To make this work, we have to replace all the places in the script where we want to refer to the FASTQ file, with the variable `$1`. 
 
-We could just use the variable `$1`, but that is not an intuitive variable name for a fastq file, is it? So we want to create a new variable called `fq` and copy the contents of `$1` into it. 
+We could just use the variable `${1}`, but that is not an intuitive variable name for a FASTQ file, is it? So we want to create a new variable called `fq` and copy the contents of `${1}` into it. 
 
 
 ```bash
 # initialize a variable with an intuitive name to store the name of the input fastq file
 
-fq=$1
+fq=${1}
 ```
 
-In the rest of the script, we can now call the fastq file using `$fq` instead of `$1`!
+In the rest of the script, we can now call the fastq file using `${fq}` instead of `${1}`!
 
-> When we set up variables we do not use the `$` before it, but when we *use the variable*, we always have to have the `$` before it. >
+> When we set up variables we do not use the `$` before it, but when we *use the variable*, we always have to have the `$` before it.
 >
 > For example: 
 >
-> initializing the `fq` variable => `fq=$1`
+> initializing the `fq` variable => `fq=${1}`
 >
-> using the `fq` variable => `fastqc $fq`
+> using the `fq` variable => `fastqc ${fq}`
 
 
 To ensure that all the output files from the workflow are properly named with sample IDs, we should extract the "base name" (or sample ID) from the name of the input file. There is a command called `basename` that will do that! 
 
-We can save the output of the `basename` command and save it as a new variable called `$base` that we can use downstream.
+We can save the output of the `basename` command and save it as a new variable called `base` that we can use downstream.
 
 ```bash
 # grab base of filename for naming outputs
-base=`basename $fq .fastq.gz`          
+base=`basename ${fq} .fastq.gz`          
 ```
 
 > **What is `basename`?**
 >
-> The `basename` command: this command takes a path or a name, and trims away all the information **before** the last `/`. If you specify the string to clear away **at the end**, it will do that as well. 
+> The `basename` command takes a path or a name, and trims away all the information **before** the last `/`. If you specify the string to clear away **at the end**, it will do that as well. 
 > 
-> In this case, if the variable `$fq` contains the path *"~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz"*, `basename $fq .fastq.gz` will output "wt_sample2_chip".
+> In this case, if the variable `${fq}` contains the path *"~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz"*, then:
+>
+> ```basename ${fq} .fastq.gz```
+>
+> Will output:
+>
+> ```wt_sample2_chip```
 >
 > ***
 >
 > **What do the backticks used with `basename` (``) do?**
 >   
-> To assign the value of the `basename` command to the `base` variable, we encapsulate the `basename $fq .fastq.gz` command in backticks. This syntax is necessary for assigning the output of a given command to a given variable.
+> To assign the value of the `basename` command to the `base` variable, we encapsulate the `basename ${fq} .fastq.gz` command in backticks. This syntax is necessary for assigning the output of a given command to a given variable.
 
 Next, we'll setup our directory structure for outputs using the `-p` option. This will make sure that `mkdir` will create the directory only if it does not already exist, and it will not throw an error if it does exist.
 
@@ -202,7 +208,7 @@ align_sorted=chipseq/results/bowtie2/${base}_sorted.bam
 align_final=chipseq/results/bowtie2/${base}_final.bam
 ```
 
-Creating these variables makes it easier to see what is going on in a long command. For example, we can now use `align_sam` instead of `/results/bowtie2/${base}.sam`. In addition, if there is a need to change the output diretory or the genome being aligned to, the change needs to be made just in one location instead of throughout the script. 
+Creating these variables makes it easier to see what is going on in a long command. For example, we can now use `align_sam` instead of `/results/bowtie2/${base}.sam`. In addition, if there is a need to change the output directory or the genome being aligned to, the change needs to be made just in one location instead of throughout the script. 
 
 ### Keeping track of tool versions
 
@@ -219,16 +225,16 @@ module load sambamba/0.7.1
 
 ### Preparing for future debugging
 
-It is a good idea to use the `echo` command for debugging. `echo` prints the string of characters specified within the quotations onto the Terminal. When you strategically place `echo` commands indicating the step of the analysis, you can determine where the script failed using the last `echo` statement displayed when you are troubleshooting. For example, we could add the below `echo` command with `$base` before we perform the FastQC analysis to indicate the step and the sample ID.
+It is a good idea to use the `echo` command for debugging. `echo` prints the string of characters specified within the quotations onto the Terminal. When you strategically place `echo` commands indicating the step of the analysis, you can determine where the script failed using the last `echo` statement displayed when you are troubleshooting. For example, we could add the below `echo` command with `${base}` before we perform the FastQC analysis to indicate the step and the sample ID.
 
 ```
-echo "FastQC analysis of $base"
+echo "FastQC analysis of ${base}"
 ```
 
 > You can also use `set -x`:
 >
-> `set -x` is a debugging tool that will make bash display the command before executing it. In case of an issue with the commands in the shell script, this type of debugging lets you quickly pinpoint the step that is throwing an error. Often, tools will display the error that caused the program to stop running, so keep this in mind for times when you are running into issues where this is not available.
-> You can turn this functionality off by saying `set +x`
+> `set -x` is a debugging tool that will make bash display the command before executing it. In case of an issue with the commands in the shell script, this type of debugging lets you quickly pinpoint the step that is throwing an error. Oftentimes, tools will display the error that caused the program to stop running, so keep this in mind for times when you are running into issues where this is not available.
+> You can turn this functionality off by using `set +x`
 
 ### Running the tools
 
@@ -238,25 +244,25 @@ Let's write up the commands to run the tools we have already tested, with a coup
 
 ```
 # Run FastQC
-fastqc -o $fastqc_out $fq
+fastqc -o ${fastqc_out} ${fq}
 
 # Run bowtie2
-bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
+bowtie2 -p 2 -q --local -x ${genome} -U ${fq} -S ${align_sam}
 
 # Create BAM from SAM
-samtools view -h -S -b -o $align_bam $align_sam
+samtools view -h -S -b -o ${align_bam} ${align_sam}
 
 # Remove SAM file
-rm $align_sam
+rm ${align_sam}
 
 # Sort BAM file by genomic coordinates
-samtools sort $align_bam -o $align_sorted 
+samtools sort ${align_bam} -o ${align_sorted} 
 
 # Filter out multi-mappers and duplicates
-sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " ${align_sorted} > ${align_final}
 
 # Create indices for all the bam files for visualization and QC
-samtools index $align_final
+samtools index ${align_final}
 ```
 
 ### Last addition to the script
@@ -264,7 +270,7 @@ samtools index $align_final
 It is best practice to have the script **usage** specified at the top of any script. This usage message should have information such that when your future self (or a co-worker) uses the script, they know what it will do and what input(s) are needed. For our script, we should have the following lines of comments right at the top after `#!/bin/bash/`:
 
 ```
-# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. Fastq files are aligned against the mm10 genome using Bowtie2. The outputted BAM file **does not** contain duplicate reads and is sorted by genomic coordinates using sambamba and samtools, respectively.
+# This script takes a fastq file of ChIP-seq data, runs FastQC and outputs a BAM file for it that is ready for peak calling. FASTQ files are aligned against the mm10 genome using Bowtie2. The outputted BAM file **does not** contain duplicate reads and is sorted by genomic coordinates using sambamba and samtools, respectively.
 # USAGE: sh chipseq_analysis_on_input_file.sh <path to the fastq file>
 ```
 
@@ -282,10 +288,10 @@ Your script should now look like this:
 cd /n/scratch/users/${USER:0:1}/${USER}/
 
 # initialize a variable with an intuitive name to store the name of the input fastq file
-fq=$1
+fq=${1}
 
 # grab base of filename for naming outputs
-base=`basename $fq .fastq.gz`  
+base=`basename ${fq} .fastq.gz`  
 
 # make all of the output directories
 # The -p option means mkdir will create the whole path if it 
@@ -313,36 +319,36 @@ module load bowtie2/2.2.9
 module load samtools/1.9
 module load sambamba/0.7.1
 
-echo "FastQC analysis of $base"
+echo "FastQC analysis of ${base}"
 
 # Run FastQC and place the output to the appropriate folder
-fastqc -o $fastqc_out $fq
+fastqc -o ${fastqc_out} ${fq}
 
-echo "Bowtie2 alignment of $base"
+echo "Bowtie2 alignment of ${base}"
 
 # Run bowtie2
-bowtie2 -p 2 -q --local -x $genome -U $fq -S $align_sam
+bowtie2 -p 2 -q --local -x ${genome} -U ${fq} -S ${align_sam}
 
-echo "Convert SAM to BAM for $base"
+echo "Convert SAM to BAM for ${base}"
 
 # Create BAM from SAM
-samtools view -h -S -b -o $align_bam $align_sam
+samtools view -h -S -b -o ${align_bam} ${align_sam}
 
 # Remove SAM file
-rm $align_sam
+rm ${align_sam}
 
-echo "Filtering $base BAM file"
+echo "Filtering ${base} BAM file"
 
 # Sort BAM file by genomic coordinates
-samtools sort $align_bam -o $align_sorted 
+samtools sort ${align_bam} -o ${align_sorted} 
 
 # Filter out duplicates
-sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " $align_sorted > $align_final
+sambamba view -h -t 2 -f bam -F "[XS] == null and not unmapped " ${align_sorted} > ${align_final}
 
 # Create indices for all the bam files for visualization and QC
-samtools index $align_final
+samtools index ${align_final}
 
-echo "The analysis for $base is done!"
+echo "The analysis for ${base} is done!"
 ```
 
 ### Saving and running script
@@ -362,7 +368,7 @@ We should all have an interactive session with 6 cores, so we can run the script
 $ sh chipseq_analysis_on_input_file.sh ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz
 ```
 
-This script will take a while to run, given the alignment, filtering and sortin steps all take a long time to run. So we can use `CTRL` + `C` and kill the job. Since the first part of the script should have run, we can go check if the folders were appropriately created.
+This script will take a while to run, given the alignment, filtering and sorting steps all take a long time to run. So we can use `CTRL` + `C` and kill the job. Since the first part of the script should have run, we can go check if the folders were appropriately created.
 
 ```bash
 $ cd /n/scratch/users/${USER:0:1}/${USER}/
@@ -370,7 +376,7 @@ $ cd /n/scratch/users/${USER:0:1}/${USER}/
 $ tree
 ```
 
-You should see something like this:
+You should see a directory structure that looks like this:
 
 ```
 .
@@ -410,8 +416,8 @@ Below is what this second script (`chipseq_analysis_on_allfiles.slurm`) would lo
 
 for fq in ~/chipseq_workshop/raw_data/*.fastq.gz
 do
-  echo "running analysis on $fq"
-  sh chipseq_analysis_on_input_file.sh $fq
+  echo "running analysis on ${fq}"
+  sh chipseq_analysis_on_input_file.sh ${fq}
 done
 ```
 
@@ -447,13 +453,13 @@ for fq in ~/chipseq_workshop/raw_data/ko_*_chip.fastq.gz
 do
 
 sbatch -p short -t 0-2:00 -c 2 --mem=8G --job-name chipseq-analysis -o %j.out -e %j.err \
---wrap="sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh $fq"
+--wrap="sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh ${fq}"
 
 sleep 1	    # wait 1 second between each job submission
   
 done
 ```
-> Please note that after the `sbatch` directives the command `sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh $fq` is in quotes.
+> Please note that after the `sbatch` directives the command `sh ~/chipseq_workshop/scripts/chipseq_analysis_on_input_file.sh ${fq}` is in quotes.
 
 ```bash
 $ sh chipseq_run_allfiles.sh
@@ -471,11 +477,11 @@ $ tree /n/scratch/users/${USER:0:1}/${USER}/chipseq/
 
 Don't forget about the `scancel` command, should something go wrong and you need to cancel your jobs.
 
-## Post analysis clean up
+## Post-analysis clean up
 
 Once your run has completed you can check the `.err` and `.out` files for each submitted job. 
 
-Finally, you can move over any results files that you will need for peak calling and visualization (the sorted `bam` and corresponding `bai` files) to your personal home directory or to your lab group's directory. *Remember that `/n/scratch/` is not backed up and any "untouched" files will be deleted after 30 days.*
+Finally, you can move over any results files that you will need for peak calling and visualization (the sorted `bam` and corresponding `bai` files) to your personal home directory or to your lab group's directory. *Remember that `/n/scratch/` is not backed up and any "untouched" files will be deleted after 45 days.*
 
 
 > **NOTE:** All job schedulers are similar, but not the same. Once you understand how one works, you can transition to another one without too much trouble. They all have their pros and cons which are considered by the system administrators when picking one for a given HPC environment. Some examples of other job schedulers are LSF, SGE, PBS/Torque.

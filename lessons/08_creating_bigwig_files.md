@@ -1,5 +1,5 @@
 ---
-title: "Firle formats for Peak Visualization"
+title: "File formats for Peak Visualization"
 author: "Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdinger"
 date: "Aug 19th, 2021"
 ---

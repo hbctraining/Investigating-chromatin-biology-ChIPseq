@@ -168,7 +168,7 @@ Each peak is considered an independent test. Therefore, when we encounter thousa
 To run MACS2, we will first load the macs2 module along with any dependencies:
 
 ```bash
-$ module load gcc/6.2.0  python/2.7.12 macs2/2.1.1.20160309
+$ module load gcc/14.2.0 python/3.13.1 macs2/2.1.1.20160309
 ```
 
 We will also need to create a directory for the output generated from MACS2:
@@ -315,3 +315,4 @@ In the next lesson, we will delve deeper into the output files and gain an under
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+

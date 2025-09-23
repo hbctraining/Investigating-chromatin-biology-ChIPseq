@@ -32,10 +32,10 @@ align_sorted=chipseq/results/bowtie2/${base}_sorted.bam
 align_final=chipseq/results/bowtie2/${base}_final.bam
 
 # set up the software environment
-module load fastqc/0.11.3
-module load gcc/6.2.0  
-module load bowtie2/2.2.9
-module load samtools/1.9
+module load fastqc/0.12.1
+module load gcc/14.2.0
+module load bowtie2/2.5.4
+module load samtools/1.21
 module load sambamba/0.7.1
 
 echo "FastQC analysis of $base"

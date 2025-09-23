@@ -58,7 +58,7 @@ srun --pty -p interactive -t 0-5:00 -c 6 --mem 8G /bin/bash
 Once you are on a compute node, load the modules:
 
 ```bash
-$ module load gcc/6.2.0 python/2.7.12 deeptools/3.0.2 
+$ module load gcc/14.2.0 python/3.13.1 deeptools/3.0.2 
 ```
 
 Finally, we will move into our results directory and copy over the necessary bigWig files:

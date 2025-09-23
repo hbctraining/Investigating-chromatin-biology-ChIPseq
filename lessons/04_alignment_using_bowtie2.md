@@ -94,21 +94,17 @@ Now we are ready to perform the read alignment. Let's first create a `bowtie2` d
 $ mkdir ~/chipseq_workshop/results/bowtie2
 ```
 
-We then need to load the module. We could find out more about Bowtie2 on O2:
+We then need to load the module. We could find out more about Bowtie2 on O2, including whether any dependencies are needed first before the module can be loaded:
 
 ```bash
 # Check modules for Bowtie2
 $ module spider bowtie2
 
 # Check for any dependencies
-$ module spider bowtie2/2.2.9
-```
+$ module spider bowtie2/2.5.4
 
-Notice that before we load Bowtie2, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2). As a tip, we recommend always run `module spider` first to check any dependent modules.
-
-```bash
-# Load the necessary compiler and Bowtie2
-$ module load gcc/6.2.0 bowtie2/2.2.9
+# Load Bowtie2
+$ module load bowtie2/2.5.4
 ```
 
 The command to run the alignment is simply `bowtie2`. Some additional arguments that we will need for aligning reads to the genome using Bowtie2 are described below:
@@ -205,11 +201,10 @@ While the SAM alignment file from Bowtie2 is human readable, we need a BAM align
 
 > NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we can delete it to save space.
 
-Let's start by loading the module `samtools`:
+Let's start by loading the module `samtools` (note that you first need to load the gcc module):
 
 ```bash
-$ module load gcc/6.2.0 # you may not need to load this if you are working in the same session from Bowtie2
-$ module load samtools/1.13
+$ module load gcc/14.2.0 samtools/1.21
 ```
 
 We outline below the parameters to use with the command `samtools view`, and what each does:
@@ -246,9 +241,9 @@ Let's specify the job submission options as below (don't forget the shebang line
 #SBATCH -c 2                  # number of cores
 #SBATCH -t 0-2:00             # time limit
 #SBATCH --mem 8G              # requested memory
-#SBATCH --job-name alignment 	# job name
-#SBATCH -o %j.out			          # file to which standard output will be written
-#SBATCH -e %j.err 		          # file to which standard error will be written
+#SBATCH --job-name alignment  # job name
+#SBATCH -o %j.out			  # file to which standard output will be written
+#SBATCH -e %j.err 		      # file to which standard error will be written
 ```
 
 In the body of the script, add the code required to:
@@ -272,7 +267,7 @@ Please refer to the corresponding code we discussed earlier in this lesson, to f
 #SBATCH --job-name alignment  # job name
 #SBATCH -o %j.out	      # file to which standard output will be written
 #SBATCH -e %j.err 	      # file to which standard error will be written<br>
-module load gcc/6.2.0 bowtie2/2.2.9 samtools/1.13<br>
+module load gcc/14.2.0 bowtie2/2.5.4 samtools/1.21<br>
 bowtie2 -p 2 -q --local \
 -x /n/groups/shared_databases/bowtie2_indexes/mm10 \
 -U ~/chipseq_workshop/raw_data/wt_sample2_chip.fastq.gz \
@@ -280,7 +275,7 @@ bowtie2 -p 2 -q --local \
 samtools view -h -S -b \
 -o ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.bam \
 ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam<br>
-rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam    
+rm ~/chipseq_workshop/results/bowtie2/wt_sample2_chip.sam
   </pre>
 </details>
 

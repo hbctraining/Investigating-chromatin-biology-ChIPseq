@@ -82,7 +82,7 @@ $ srun --pty -p interactive -t 0-2:30 --mem 10G -c 2 /bin/bash
 We will also load the required modules for this lesson:
 
 ```bash
-module load gcc/6.2.0 samtools/1.13 sambamba/0.7.1
+module load gcc/14.2.0 samtools/1.21 sambamba/1.0.1
 ```
 
 
@@ -175,4 +175,5 @@ sambamba view --format \
 
 ***
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+
 

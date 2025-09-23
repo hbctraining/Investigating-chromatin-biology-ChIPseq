@@ -102,7 +102,7 @@ $ srun --pty -p interactive -t 0-12:00 --mem 2G /bin/bash
 Next, load the modules for `bedtools` and `samtools`:
 	
 ```bash
-$ module load gcc/6.2.0 bedtools/2.26.0 samtools/1.13
+$ module load gcc/14.2.0 bedtools/2.31.0 samtools/1.21
 ```
 
 
@@ -224,6 +224,7 @@ wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
 ***
 
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+
 
 
 

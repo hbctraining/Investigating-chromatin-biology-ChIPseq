@@ -95,7 +95,7 @@ We will use [SAMtools](http://samtools.sourceforge.net/) again, specifically the
 Let's load the `samtools` module:
 
 ```bash
-$ module load gcc/6.2.0 samtools/1.13
+$ module load gcc/14.2.0 samtools/1.21
 ```
 
 Create an index for the `wt_sample2_chip_final.bam` file that we created in earlier lesson:
@@ -109,7 +109,7 @@ $ samtools index ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam
 Finally, let's make sure we have the required modules loaded to use `deepTools`:
 
 ```bash 
-$ module load python/2.7.12 deeptools/3.0.2 
+$ module load python/3.13.1 deeptools/3.0.2 
 ```
 
 ### Normalization

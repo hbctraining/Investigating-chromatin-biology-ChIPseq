@@ -201,7 +201,13 @@ While the SAM alignment file from Bowtie2 is human readable, we need a BAM align
 
 > NOTE: Once we generate the BAM file, we don't need to retain the SAM file anymore - we can delete it to save space.
 
-Let's start by loading the module `samtools` (note that you first need to load the gcc module):
+Let's start by investigating the module `samtools`.
+
+```bash
+module spider samtools
+```
+
+Notice that before we load Samtools, we also need to load the gcc compiler (as is the case for many other NGS analysis tools on O2).
 
 ```bash
 $ module load gcc/14.2.0 samtools/1.21

@@ -36,7 +36,8 @@ module load fastqc/0.12.1
 module load gcc/14.2.0
 module load bowtie2/2.5.4
 module load samtools/1.21
-module load sambamba/0.7.1
+module load conda/miniforge3/24.11.3-0
+conda activate /n/groups/hbctraining/chipseq_env
 
 echo "FastQC analysis of $base"
 

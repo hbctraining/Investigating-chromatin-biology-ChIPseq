@@ -1,5 +1,5 @@
 ---
-title: "Peak calling with MACS2"
+title: "Peak calling with MACS3"
 author: "Meeta Mistry, Jihe Liu, Radhika Khetani, Mary Piper, Will Gammerdinger"
 date: "September 20th, 2021"
 ---
@@ -10,9 +10,9 @@ Approximate time: 60 minutes
 
 ## Learning Objectives
 
-* Describe the different components of the MACS2 peak calling algorithm
-* Describe the parameters involved in running MACS2
-* List and describe the output files from MACS2
+* Describe the different components of the MACS3 peak calling algorithm
+* Describe the parameters involved in running MACS3
+* List and describe the output files from MACS3
 
 ## Peak Calling
 
@@ -35,7 +35,7 @@ For ChIP-seq experiments, what we observe from the alignment files is a **strand
 A common question is **how do we navigate the myriad of options for peak calling, and how do we determine which is best for our data?** A study by [Wilbanks & Facciotti (2010). PLoS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011471), conducted an evaluation of algorithm performance in ChIP-Seq peak detection of 12 different peak callers. The conclusion was that while there was some consensus among them, the number of peaks identified by each was highly variable. The choice of caller is also dependent on your data and the protein under study. A commonly used tool for identifying binding sites is named [Model-based Analysis of ChIP-seq (MACS)](https://github.com/taoliu/MACS), and is what we will be using in this workshop.
 
 ### CUT&RUN
-While standard ChIP-seq peak callers like MACS2 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. To address this, the **Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN)** which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
+While standard ChIP-seq peak callers like MACS3 are commonly used for calling peaks from CUT&RUN data, there are concerns that **the low read depths and low background levels can render standard peak callers vulnerable to increased false postives**. To address this, the **Henikoff group has developed a tool called [SEACR](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-019-0287-4) (Sparse Enrichment Analysis for CUT&RUN)** which provides an analysis strategy that uses the global distribution of background signal to calibrate a simple threshold for peak calling.
 
 **How does it work?**
 1. Data are first parsed into signal blocks representing segments of continuous, nonzero read depth by fragment spanning read pairs.
@@ -52,7 +52,7 @@ _Image source: ["Peak calling by Sparse Enrichment Analysis for CUT&RUN chromati
 
 
 ### ATAC-seq
-The goal of ATAC-seq is to identify regions of accessible chromatin, and, by proxy, regulatory elements and sites of transcription factor binding. Calling peaks therefore represents the identification of regions of the genome that are enriched for aligned reads, similar to what we do for ChIP-seq. Currently, **MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline**. There are **several parameters that need to be changed** compared to the ChIP-seq analysis workflow, and we describe them in detail towards the end of this lesson. Specifically, we need to account for the differences which include:
+The goal of ATAC-seq is to identify regions of accessible chromatin, and, by proxy, regulatory elements and sites of transcription factor binding. Calling peaks therefore represents the identification of regions of the genome that are enriched for aligned reads, similar to what we do for ChIP-seq. Currently, **MACS is the default peak caller of the ENCODE ATAC-seq pipeline**. There are **several parameters that need to be changed** compared to the ChIP-seq analysis workflow, and we describe them in detail towards the end of this lesson. Specifically, we need to account for the differences which include:
 
 1. Lack of an input sample (negative control)
 2. Lack of biomodal read distribution (i.e. no need to shift reads). 
@@ -61,12 +61,10 @@ The goal of ATAC-seq is to identify regions of accessible chromatin, and, by pro
 _NOTE: There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or there are caller that are exclusively designed for ATAC-seq(i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166))._
 
 
-## MACS2
+## MACS3
 The [MACS algorithm](http://genomebiology.biomedcentral.com/articles/10.1186/gb-2008-9-9-r137) captures the influence of genome complexity to evaluate the significance of enriched ChIP regions. Although it was developed for the detection of transcription factor binding sites (narrow peaks), it is also suited for larger regions (broad peaks). 
 
-We will be using **MACS2** in this workshop. The **underlying algorithm for peak calling remains the same as the original MACS**, but it comes with some enhancements in functionality. The MACS/MACS2 workflow is depicted below. In this lesson, we will describe the steps in more detail.
-
-> **NOTE**: You will notice that the link above points to **MACS3, the newest version of this software**. For this workshop we are limited to what is available as a module on O2, but if you have access to the latest version - we do recommend using it. The base algorithm does not change between versions, rather small tweaks have been made towards speed/memory optimization and code cleanup. There are also additional features added. For more details, please [refer to the GitHub page](https://github.com/macs3-project/MACS). 
+We will be using **MACS3** in this workshop. The **underlying algorithm for peak calling remains the same as the original MACS**, but it comes with some [enhancements in functionality](https://github.com/macs3-project/MACS) compared to MACS or MACS2. The MACS workflow is depicted below. In this lesson, we will describe the steps in more detail.
 
 <p align="center">
 <img src="../img/macs_workflow.png" width="400">
@@ -107,9 +105,9 @@ To identify the shift size:
 1. MACS scans the whole sample **searching for all highly significant enriched regions**. *This is done only using the ChIP sample!* 
    * These regions are identified by MACS sliding across the genome using a 600bp window to find regions with **tags more than 50-fold enriched relative to a random tag genome distribution**. 
    
-   > *Note 1:* Both the window size and the fold enrichment values described above are the default values. Although there are [parameters](06_peak_calling_macs.md#macs2-parameters) that allow you to modify these (i.e `bw` and `mfold`), tweaking it is not recommended.
+   > *Note 1:* Both the window size and the fold enrichment values described above are the default values. Although there are [parameters](06_peak_calling_macs.md#macs3-parameters) that allow you to modify these (i.e `bw` and `mfold`), tweaking it is not recommended.
    > 
-   > *Note 2:* The default fold enrichment for MACS2 is greater than the value described in the workflow for MACSv1 above.
+   > *Note 2:* The default fold enrichment for MACS3 is greater than the value described in the workflow for MACSv1 above.
 2. MACS randomly **samples 1,000 of these high-quality peaks** identified in #1. 
 3. For these 1,000 peaks, MACS separates their positive and negative strand tags and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. 
 4. MACS **shifts all reads in the sample by d/2** toward the 3' ends to the most likely protein-DNA interaction sites
@@ -150,7 +148,7 @@ Next, a Poisson distribution p-value is computed based on λ. A region is consid
 
 ### Estimation of false discovery rate
 
-Each peak is considered an independent test. Therefore, when we encounter thousands of significant peaks detected in a sample, we have a multiple testing problem. In MACSv1.4, the FDR was determined empirically by exchanging the ChIP and control samples. However, in MACS2, p-values are now corrected for multiple comparison using the **Benjamini-Hochberg correction**.
+Each peak is considered an independent test. Therefore, when we encounter thousands of significant peaks detected in a sample, we have a multiple testing problem. In MACSv1.4, the FDR was determined empirically by exchanging the ChIP and control samples. However, in MACS3, p-values are now corrected for multiple comparison using the **Benjamini-Hochberg correction**.
 
 > ### Other peak callers
 > There are many other tools out there that are capable of handling both types of profiles (e.g. narrow, broad); each having specific sub-commands and/or modes to do so. As such, it is good to **have some idea about what type of binding profile you are expecting when choosing your peak caller** to run. 
@@ -163,19 +161,20 @@ Each peak is considered an independent test. Therefore, when we encounter thousa
 > * [haystack bio](https://github.com/pinellolab/haystack_bio): Epigenetic Variability and Motif Analysis Pipeline
 
 
-## Running MACS2 
+## Running MACS3
 
-To run MACS2, we will first load the macs2 module along with any dependencies:
+To run MACS3, we will first load the conda module, and then conda environment where this tool is installed:
 
 ```bash
-$ module load gcc/14.2.0 python/3.13.1 macs2/2.1.1.20160309
+$ module load conda/miniforge3/24.11.3-0
+$ conda activate /n/groups/hbctraining/chipseq_env
 ```
 
-We will also need to create a directory for the output generated from MACS2:
+We will also need to create a directory for the output generated from MACS3:
 
 ```bash
-# Create macs2 directory in results
-$ mkdir -p ~/chipseq_workshop/results/macs2
+# Create macs3 directory in results
+$ mkdir -p ~/chipseq_workshop/results/macs3
 ```
 
 Now change directories to the `results` folder:
@@ -187,11 +186,11 @@ $ cd ~/chipseq_workshop/results/
 Since we only created a filtered BAM file for a single sample, **we will use the BAM files we have generated for you**. Rather than copying them over, we will have you point to them within your peak calling command.
 
 
-### MACS2 parameters
+### MACS3 parameters
 
-There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2) available in MACS2 serving as sub-commands. We will only cover `callpeak` in this lesson, but you can use `macs2 COMMAND -h` to find out more, if you are interested.
+There are 14 [major functions](https://macs3-project.github.io/MACS/docs/subcommands_index.html) available in MACS3 serving as sub-commands. We will only cover `callpeak` in this lesson, but you can use `macs3 COMMAND -h` to find out more, if you are interested.
 
-`callpeak` is the main function in MACS2 and can be invoked by typing `macs2 callpeak`. If you type this command without parameters, you will see a full description of commandline options. Here is a shorter list of the commonly used ones: 
+`callpeak` is the main function in MACS3 and can be invoked by typing `macs3 callpeak`. If you type this command without parameters, you will see a full description of commandline options. Here is a shorter list of the commonly used ones: 
 
 **Input file options**
 
@@ -204,7 +203,7 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 
 **Output arguments**
 
-* `--outdir`: MACS2 will save all output files into speficied folder for this option
+* `--outdir`: MACS3 will save all output files into specified folder for this option
 * `-n`: The prefix string for output files
 * `-B/--bdg`: store the fragment pileup, control lambda, -log10pvalue and -log10qvalue scores in bedGraph files
 
@@ -221,22 +220,22 @@ There are seven [major functions](https://github.com/taoliu/MACS#usage-of-macs2)
 * `--nolambda`: do not consider the local bias/lambda at peak candidate regions
 * `--broad`: broad peak calling
 
-> **NOTE:** Relaxing the q-value does not behave as expected in this case, since it is partially tied to peak widths. Ideally, if you relaxed the thresholds, you would simply get more peaks. But with MACS2, relaxing thresholds also results in wider peaks.
+> **NOTE:** Relaxing the q-value does not behave as expected in this case, since it is partially tied to peak widths. Ideally, if you relaxed the thresholds, you would simply get more peaks. But with MACS3, relaxing thresholds also results in wider peaks.
 
 Now that we have a feel for the different ways we can modify our command, let's set up the command for each of our wildtype replicates:
 
 ```bash
-macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_chip_final.bam \
+macs3 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_chip_final.bam \
     -c /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_input_final.bam \
     -f BAM -g mm \
     -n wt_sample1 \
-    --outdir macs2 2> macs2/wt_sample1_macs2.log
+    --outdir macs3 2> macs3/wt_sample1_macs3.log
 
-$ macs2 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip_final.bam \
+$ macs3 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_chip_final.bam \
     -c /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample2_input_final.bam \
     -f BAM -g mm \
     -n wt_sample2 \
-    --outdir macs2 2> macs2/wt_sample2_macs2.log
+    --outdir macs3 2> macs3/wt_sample2_macs3.log
 ```
 
 The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the stadard error to file. **You can use `less` to look at the log file and see what information is being reported.**
@@ -244,34 +243,34 @@ The tool is quite verbose, and normally you would see lines of text being printe
 Move the log files to the `log` directory we had created during our project setup:
 
 ```bash
-$ mv macs2/*.log ../logs/
+$ mv macs3/*.log ../logs/
 ```
 
-As a general peak-caller, MACS2 can be applied to any DNA enrichment assays if the question to be asked is simply: _"Where we can find significant reads coverage than the random background?"_ Below, we comment on changes required for peak calling on CUT&RUN and ATAC-seq data.
+As a general peak-caller, MACS3 can be applied to any DNA enrichment assays if the question to be asked is simply: _"Where we can find significant reads coverage than the random background?"_ Below, we comment on changes required for peak calling on CUT&RUN and ATAC-seq data.
 
 <details>
 	<summary><b><i>How do the parameters change for CUT&RUN?</i></b></summary>
 	<br>
 	<b>There is very little required change for peak calling on CUT&amp;RUN-seq data.</b> The only notable difference is the CUT&amp;RUN sequencing data will typically be paired-end. To account for this, you can add the format parameter.<br><br>
-<ul><li><code>-f BAMPE</code>: Paired-end analysis mode in MACS2. In this mode, MACS2 interprets the full extent of the sequenced DNA fragments correctly, and discards alignments that are not properly paired.</li></ul>
-<i>When PE datasets are analyzed in single-end mode, MACS2 eliminates the second read of each pair (the &quot;R2&quot; read) and then treats the remaining &quot;R1&quot; reads as if they were single-ended. It models the fragment lengths from the &quot;single-end&quot; R1 reads and then extends the read lengths to the average value from the mode. Using <b>this mode</b> with paired-end data <b>enables the use of actual fragment lengths</b>, for a more accurate end result</i><br><br>	
+<ul><li><code>-f BAMPE</code>: Paired-end analysis mode in MACS3. In this mode, MACS3 interprets the full extent of the sequenced DNA fragments correctly, and discards alignments that are not properly paired.</li></ul>
+<i>When PE datasets are analyzed in single-end mode, MACS3 eliminates the second read of each pair (the &quot;R2&quot; read) and then treats the remaining &quot;R1&quot; reads as if they were single-ended. It models the fragment lengths from the &quot;single-end&quot; R1 reads and then extends the read lengths to the average value from the mode. Using <b>this mode</b> with paired-end data <b>enables the use of actual fragment lengths</b>, for a more accurate end result</i><br><br>	
  </details>
 
 <details>
 	<summary><b><i>How do the parameters change for ATAC-seq</i></b></summary>
-	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS2 is the default peak caller of the ENCODE ATAC-seq pipeline, and so below we provide the recommended parameter changes if using ATAC-seq data as input.<br>
-<ul><li><code>-f BAMPE</code>: Paired-end analysis mode in MACS2.</li>
+	<br>To identify acccessible regions in the genome we need to <b>call peaks on the nucleosome-free BAM file obtained post-filtering</b>. Currently, MACS3 is the default peak caller of the ENCODE ATAC-seq pipeline, and so below we provide the recommended parameter changes if using ATAC-seq data as input.<br>
+<ul><li><code>-f BAMPE</code>: Paired-end analysis mode in MACS3.</li>
 <li><code>--nomodel</code>: Bypass building the shifting model. The read pileup does not represent a bimodal pattern, as there is no specific protein-DNA interaction that we are assaying. Open regions will be unimodal in nature, not requiring any shifting of reads.</li>
 <li><code>--keep-dup all</code>: Keep all reads since we have already filtered duplicates from our BAM files.</li>
-<li><code>--nolambda</code>: MACS2 will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)</li></ul>
+<li><code>--nolambda</code>: MACS3 will use the background lambda as local lambda (since we have no input control samples for ATAC-seq)</li></ul>
 </details>
 
-## MACS2 Output files
+## MACS3 Output files
 
-Change directories into `macs2`, and list the output files that we have generated.
+Change directories into `macs3`, and list the output files that we have generated.
 
 ```bash
-$ cd macs2/
+$ cd macs3/
 	
 $ ls -lh
 ```
@@ -294,7 +293,7 @@ $ wc -l *.narrowPeak
 
 **Exercise:**
 
-1. Using the BAM files listed below, use MACS2 to call peaks on the KO samples.
+1. Using the BAM files listed below, use MACS3 to call peaks on the KO samples.
 
 ```bash
 # KO ChIP BAM files

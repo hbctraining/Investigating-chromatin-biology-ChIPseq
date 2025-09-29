@@ -106,10 +106,11 @@ $ samtools index ~/chipseq_workshop/results/bowtie2/wt_sample2_chip_final.bam
 
 > _Check your `bowtie2` folder to make sure see the new index file that was generated!_
 
-Finally, let's make sure we have the required modules loaded to use `deepTools`:
+Finally, let's make sure we have the required modules loaded to use `deepTools`, and then conda environment where this tool is installed:
 
 ```bash 
-$ module load python/3.13.1 deeptools/3.0.2 
+$ module load conda/miniforge3/24.11.3-0
+$ conda activate /n/groups/hbctraining/chipseq_env
 ```
 
 ### Normalization

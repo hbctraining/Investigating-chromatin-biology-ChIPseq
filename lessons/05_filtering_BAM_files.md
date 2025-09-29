@@ -79,11 +79,39 @@ Before we begin, you will want to make sure you are **logged into O2.** To start
 $ srun --pty -p interactive -t 0-2:30 --mem 10G -c 2 /bin/bash
 ```
 
-We will also load the required modules for this lesson:
+We will also load the required modules for this lesson. We start off by loading gcc and Samtools as we have seen before:
 
 ```bash
-module load gcc/14.2.0 samtools/1.21 sambamba/1.0.1
+$ module load gcc/14.2.0 samtools/1.21
 ```
+
+We will also need an additional tool, [Sambamba](https://github.com/biod/sambamba), which is not contained in the LMOD system. We have gone ahead and installed Sambamba in a **conda environment**: you can think of this environment as an isolated bucket where we will put all the extra tools we need for this analysis. We can install as many tools as we need in the environment, and then load all of these tools in a single command by activating the environment. The conda environment can be accessed after first loading the `conda` module. 
+
+```bash
+$ module load conda/miniforge3/24.11.3-0
+$ conda activate /n/groups/hbctraining/chipseq_env
+```
+
+> **NOTE:** This shared conda environment is intended to be used for the purposes of this workshop only. For reproducibility reasons, you should create your own environment for future analyses. Having your own environment allows you to be running the newest software versions at the time of your analysis, whereas this environment might contain tools that are several versions behind, and also ensures that you know which version of tools you are running, whereas we may update the tool versions in this conda environment at any time and without warning.
+
+<details>
+	<summary><b><i>Click here to learn how to create your own conda environment to install additional tools</i></b></summary><br>
+	<p><b>We are going to install all of the tools we need for the workshop</b>, not just Sambamba. We will then load this environment every time we need a tool not available in the LMOD system for the rest of the workshop.</p><br>
+	<p>Make sure you replace `/path/to/directory/on/O2` with the project or lab directory where you want the environment to be created!<br></p>
+	<pre>bash
+# make sure you are on a compute node
+$ srun --pty -p interactive -t 0-10:00 --mem 24G -c 1 bash
+# load the conda module
+$ module load conda/miniforge3/24.11.3-0
+# create a conda environment in the specified directory
+$ conda create --prefix /path/to/directory/on/O2 bioconda::sambamba bioconda::macs3 bioconda::deeptools bioconda::phantompeakqualtools
+# enter the conda environment
+$ conda activate /path/to/directory/on/O2
+  </pre>
+  <p>If you run into problems installing the software, please contact HMS RC at rchelp@hms.harvard.edu for support.<br></p>
+ </details>
+ 
+> **NOTE:** When you are finished using the software contained in the conda environment, you can exit back to the standard terminal screen using the command `conda deactivate`.
 
 
 ### 1. Sort BAM files by genomic coordinates

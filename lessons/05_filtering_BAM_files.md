@@ -97,7 +97,7 @@ $ conda activate /n/groups/hbctraining/chipseq_env
 <details>
 	<summary><b><i>Click here to learn how to create your own conda environment to install additional tools</i></b></summary><br>
 	<p><b>We are going to install all of the tools we need for the workshop</b>, not just Sambamba. We will then load this environment every time we need a tool not available in the LMOD system for the rest of the workshop.</p><br>
-	<p>Make sure you replace `/path/to/directory/on/O2` with the project or lab directory where you want the environment to be created!<br></p>
+	<p>Make sure you replace <code>/path/to/directory/on/O2</code> with the project or lab directory where you want the environment to be created!<br></p>
 	<pre>bash
 # make sure you are on a compute node
 $ srun --pty -p interactive -t 0-10:00 --mem 24G -c 1 bash

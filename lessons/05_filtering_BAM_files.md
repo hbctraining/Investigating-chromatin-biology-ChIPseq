@@ -98,7 +98,7 @@ $ conda activate /n/groups/hbctraining/chipseq_env
 	<summary><b><i>Click here to learn how to create your own conda environment to install additional tools</i></b></summary><br>
 	<p><b>We are going to install all of the tools we need for the workshop</b>, not just Sambamba. We will then load this environment every time we need a tool not available in the LMOD system for the rest of the workshop.</p><br>
 	<p>Make sure you replace <code>/path/to/directory/on/O2</code> with the project or lab directory where you want the environment to be created!<br></p>
-	<pre>bash
+	<pre>
 # make sure you are on a compute node
 $ srun --pty -p interactive -t 0-10:00 --mem 24G -c 1 bash
 # load the conda module
@@ -167,7 +167,7 @@ We filter out unmapped reads by specifying in the filter `not unmapped`, and dup
 	<summary><b><i>Click here for additional filtering considerations for CUT&amp;RUN data</i></b></summary>
 	<br>Once the CUT&amp;RUN sequence reads have been aligned to the genome, the resulting <b>BAM files can be filtered by fragment size</b>. Fragments can be divided into ≤ 120-bp and > 120-bp fractions. For transcription factors or proteins with an expected punctate binding profile, you can use the ≤ 120-bp fraction which is likely to contain binding sites. The range can be increased depending on the protein of interest, and alternatively BAM files without filtering can also be used.
 	Example code for filtering BAM files by fragment size:<br>
-<pre>bash
+<pre>
 sambamba view --format \
   bam --nthreads 6 \
   -F "((template_length > 0 and template_length < 120) or (template_length < 0 and template_length > -120))" $file | samtools view -b > bams_sizeSelect/${s}-sizeSelect.bam

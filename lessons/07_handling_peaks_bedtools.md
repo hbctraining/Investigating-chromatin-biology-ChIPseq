@@ -23,7 +23,7 @@ Now that we have completed peak calling, we are ready to perform QC on our calle
 <img src="../img/chipseq_bedtoolsworkflow_sept2021.png" width="600">
 </p>
 
-In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format** (**B**rowser **E**xtensible **D**ata). We will also describe the contents of the narrowPeak files (output from MACS2) and how it relates to BED. 
+In this lesson, we will introduce you to an important file format that you will encounter when working with peak calls called the **BED format** (**B**rowser **E**xtensible **D**ata). We will also describe the contents of the narrowPeak files (output from MACS3) and how it relates to BED. 
 
 We will use **`bedtools`, a suite of tools that is very helpful when working with BED files and other related file formats**, to complete the following tasks for the WT and KO peak calls from this PRDM16 dataset:
 
@@ -160,9 +160,9 @@ To filter out blacklisted regions for `wt_sample1`, we use the following code. N
 ```bash
 $ bedtools intersect \
 -v \
--a macs2/wt_sample1_peaks.narrowPeak \
+-a macs3/wt_sample1_peaks.narrowPeak \
 -b ../reference_data/mm10-blacklist.v2.bed \
-> macs2/wt_sample1_peaks_filtered.bed
+> macs3/wt_sample1_peaks_filtered.bed
 ```
 
 Similarly, we can filter out blacklisted regions for `wt_sample2`:
@@ -170,9 +170,9 @@ Similarly, we can filter out blacklisted regions for `wt_sample2`:
 ```bash
 $ bedtools intersect \
 -v \
--a macs2/wt_sample2_peaks.narrowPeak \
+-a macs3/wt_sample2_peaks.narrowPeak \
 -b ../reference_data/mm10-blacklist.v2.bed \
-> macs2/wt_sample2_peaks_filtered.bed
+> macs3/wt_sample2_peaks_filtered.bed
 ```
 
 > **NOTE:** The narrowPeak file also follows the bed file format. That's why we could use it as an input, even though it does not end with the extension `.bed`.
@@ -199,15 +199,15 @@ The code below generates the overlapping peaks:
 ```bash
 $ bedtools intersect \
 -wo -f 0.3 -r \
--a macs2/wt_sample1_peaks_filtered.bed \
--b macs2/wt_sample2_peaks_filtered.bed \
-> macs2/wt_peaks_final.bed
+-a macs3/wt_sample1_peaks_filtered.bed \
+-b macs3/wt_sample2_peaks_filtered.bed \
+> macs3/wt_peaks_final.bed
 ```
 
-Finally, let's check how many confident peaks we are left with. Does this seem like a reasonable number of peaks to you? (You should get ~7,300 peaks)
+Finally, let's check how many confident peaks we are left with. Does this seem like a reasonable number of peaks to you? (You should get ~8,200 peaks)
 
 ```bash
-wc -l ~/chipseq_workshop/results/macs2/wt_peaks_final.bed
+$ wc -l ~/chipseq_workshop/results/macs3/wt_peaks_final.bed
 ```
 
 > ### Other approaches for assessing peak reproducibility

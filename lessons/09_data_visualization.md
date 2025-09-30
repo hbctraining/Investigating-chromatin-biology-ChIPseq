@@ -52,7 +52,7 @@ To start, you will need to be on a **compute node** and ensure you have an inter
 > _NOTE:_ If you have the O2 session open from the last lesson on creating bigWig files, you already have yourself setup with the appropriate amount of resources.
 
 ```bash
-srun --pty -p interactive -t 0-5:00 -c 6 --mem 8G /bin/bash
+$ srun --pty -p interactive -t 0-5:00 -c 6 --mem 8G /bin/bash
 ```
 
 Once you are on a compute node, load the modules, and then conda environment where `deeptools` is installed:
@@ -92,9 +92,9 @@ Below we describe the **parameters** we will be using:
 Let's create a matrix for the WT replicates:
 
 ```bash
-computeMatrix reference-point --referencePoint center \
+$ computeMatrix reference-point --referencePoint center \
 -b 4000 -a 4000 \
--R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+-R ~/chipseq_workshop/results/macs3/wt_peaks_final.bed \
 -S visualization/bigWig/wt_sample1_chip.bw visualization/bigWig/wt_sample2_chip.bw \
 --skipZeros \
 -o ~/chipseq_workshop/results/visualization/wt_matrix.gz \
@@ -105,14 +105,14 @@ computeMatrix reference-point --referencePoint center \
 ### 2. Drawing the profile plot
 Once you have computed the matrix, you can create the **profile plot**. First, make a directory designated for the figures we will be creating, and then we will run `plotProfile`. _The `plotProfile` command will take a shorter amount of time to run._ 
 
-> **NOTE:** `plotProfile` has many options to optimize your figure, including the ability to change the type of lines plotted, and to plot by group rather than sample. We encourage you to explore the [documentation](https://deeptools.readthedocs.io/en/develop/content/tools/plotProfile.html?highlight=plotProfile) to find out more detail.
+> **NOTE:** `plotProfile` has many options to optimize your figure, including the ability to change the type of lines plotted, and to plot by group rather than sample. We encourage you to explore the [documentation](https://deeptools.readthedocs.io/en/stable/content/tools/plotProfile.html) to find out more detail.
 
 ```bash
 # Create figures directory under visualization
-mkdir ~/chipseq_workshop/results/visualization/figures
+$ mkdir ~/chipseq_workshop/results/visualization/figures
 
 # Plot the profiles
-plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
+$ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix.gz \
 -out ~/chipseq_workshop/results/visualization/figures/plot1_wt_replicates.png \
 --regionsLabel "" \
 --perGroup \
@@ -147,15 +147,15 @@ The KO samples in the dataset represent two separate pools of E15.5 Prdm16 condi
   
  <p><pre>
   # Navigate to results directory
-  computeMatrix reference-point --referencePoint center \
+  $ computeMatrix reference-point --referencePoint center \
   -b 4000 -a 4000 \
-  -R ~/chipseq_workshop/results/macs2/wt_peaks_final.bed \
+  -R ~/chipseq_workshop/results/macs3/wt_peaks_final.bed \
   -S visualization/bigWig/wt_sample2_chip.bw visualization/bigWig/ko_sample2_chip.bw \
   --skipZeros \
   -o visualization/wt_ko_matrix.gz \
   -p 6
 
-  plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
+  $ plotProfile -m ~/chipseq_workshop/results/visualization/wt_ko_matrix.gz \
   -out ~/chipseq_workshop/results/visualization/figures/plot2_wt_ko.png \
   --regionsLabel "" \
   --perGroup \
@@ -198,7 +198,7 @@ To create this profile plot, we will need to compute yet another matrix using th
 **The matrix takes very long to compute** with so many regions as input, and so **we have created it for you**. Copy over the matrix into your `visualization` directory:
 
 ```bash
-cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_matrix_allGenes_TSS.gz visualization/
+$ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_matrix_allGenes_TSS.gz visualization/
 ```
 
 _The code to compute the matrix is provided in the drop-down below if you are **interested in seeing the changes** that were made._ 
@@ -208,7 +208,7 @@ _The code to compute the matrix is provided in the drop-down below if you are **
  <p><pre>
  # Please DO NOT RUN this code.
   # DO NOT RUN!
-  computeMatrix reference-point --referencePoint TSS \
+  $ computeMatrix reference-point --referencePoint TSS \
   -b 4000 -a 4000 \
   -R /n/groups/hbctraining/harwell-datasets/chipseq_workshop/reference/mm10-allknownGenes.bed \
   -S visualization/bigWig/wt_sample1_chip.bw visualization/bigWig/wt_sample2_chip.bw \
@@ -222,7 +222,7 @@ _The code to compute the matrix is provided in the drop-down below if you are **
 Use the matrix to **create your own profile plot** by running the code below. Once complete, copy your PNG file over to your local computer to open it up.
 
 ```bash
-plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.gz \
+$ plotProfile -m ~/chipseq_workshop/results/visualization/wt_matrix_allGenes_TSS.gz \
 -out ~/chipseq_workshop/results/visualization/figures/plot1_wt_TSS.png \
 --regionsLabel "" \
 --perGroup \
@@ -279,14 +279,13 @@ From this dataset, we were able to find ChIP experiments (reference epigenome [E
 We have computed the matrix for you. Copy it over to your visualization directory:
 
 ```bash
-cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_encode_matrix.gz visualization/
+$ cp /n/groups/hbctraining/harwell-datasets/workshop_material/results/visualization/wt_encode_matrix.gz visualization/
 ```
 
 Run the code below to create the profile plot:
 
 ```bash
-
-plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
+$ plotProfile -m ~/chipseq_workshop/results/visualization/wt_encode_matrix.gz \
 -out ~/chipseq_workshop/results/visualization/figures/plot2_wt_encode.png \
 --regionsLabel "" \
 --perGroup \

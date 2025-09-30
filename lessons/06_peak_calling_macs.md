@@ -58,7 +58,7 @@ The goal of ATAC-seq is to identify regions of accessible chromatin, and, by pro
 2. Lack of biomodal read distribution (i.e. no need to shift reads). 
 
 
-_NOTE: There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or there are caller that are exclusively designed for ATAC-seq(i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166))._
+_NOTE: There are additional ChIP-seq tools that have functionality to accomodate ATAC-seq data (i.e. [Genrich](https://github.com/jsh58/Genrich), or there are caller that are exclusively designed for ATAC-seq (i.e. [HMMRATAC](https://academic.oup.com/nar/article/47/16/e91/5519166))._
 
 
 ## MACS3
@@ -105,8 +105,8 @@ To identify the shift size:
 1. MACS scans the whole sample **searching for all highly significant enriched regions**. *This is done only using the ChIP sample!* 
    * These regions are identified by MACS sliding across the genome using a 600bp window to find regions with **tags more than 50-fold enriched relative to a random tag genome distribution**. 
    
-   > *Note 1:* Both the window size and the fold enrichment values described above are the default values. Although there are [parameters](06_peak_calling_macs.md#macs3-parameters) that allow you to modify these (i.e `bw` and `mfold`), tweaking it is not recommended.
-   > 
+   > *Note 1:* Both the window size and the fold enrichment values described above are the default values. Although there are [parameters](06_peak_calling_macs.md#macs3-parameters) that allow you to modify these (i.e. `bw` and `mfold`), tweaking it is not recommended.
+
    > *Note 2:* The default fold enrichment for MACS3 is greater than the value described in the workflow for MACSv1 above.
 2. MACS randomly **samples 1,000 of these high-quality peaks** identified in #1. 
 3. For these 1,000 peaks, MACS separates their positive and negative strand tags and aligns them by the midpoint between their centers. The **distance between the modes of the two peaks in the alignment is defined as 'd'** and represents the estimated fragment length. 
@@ -197,7 +197,7 @@ There are 14 [major functions](https://macs3-project.github.io/MACS/docs/subcomm
 * `-t`: The ChIP data file (this is the only REQUIRED parameter for MACS)
 * `-c`: The control or mock data file
 * `-f`: format of input file; Default is "AUTO", which will allow MACS to decide the format automatically.
-* `-g`: mappable genome size, which is defined as the genome size that can be sequenced (1.0e+9 or 1000000000, are both accepted formats). Some precompiled values are provided (i.e. 'hs' for human (2.7e9), 'mm' for mouse (1.87e9), 'ce' for C. elegans (9e7) and 'dm' for fruitfly (1.2e8))
+* `-g`: mappable genome size, which is defined as the genome size that can be sequenced (1.0e+9 or 1000000000, are both accepted formats). Some precompiled values are provided (i.e., 'hs' for human (2.7e9), 'mm' for mouse (1.87e9), 'ce' for C. elegans (9e7) and 'dm' for fruitfly (1.2e8))
 
 > **NOTE:** While MACS can be used to call peaks without an input control, we advise against this. The control sample increases specificity of the peak calls, and without it you will find many false positive peaks identified. 
 
@@ -225,7 +225,7 @@ There are 14 [major functions](https://macs3-project.github.io/MACS/docs/subcomm
 Now that we have a feel for the different ways we can modify our command, let's set up the command for each of our wildtype replicates:
 
 ```bash
-macs3 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_chip_final.bam \
+$ macs3 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_chip_final.bam \
     -c /n/groups/hbctraining/harwell-datasets/workshop_material/results/bowtie2/wt_sample1_input_final.bam \
     -f BAM -g mm \
     -n wt_sample1 \
@@ -238,7 +238,7 @@ $ macs3 callpeak -t /n/groups/hbctraining/harwell-datasets/workshop_material/res
     --outdir macs3 2> macs3/wt_sample2_macs3.log
 ```
 
-The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the stadard error to file. **You can use `less` to look at the log file and see what information is being reported.**
+The tool is quite verbose, and normally you would see lines of text being printed to the terminal, describing each step that is being carried out. We have captured that information into a log file using `2>` to re-direct the standard error to file. **You can use `less` to look at the log file and see what information is being reported.**
 	
 Move the log files to the `log` directory we had created during our project setup:
 
